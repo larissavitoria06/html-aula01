@@ -83,7 +83,6 @@
     </section>
 
     <script>
-        // Função de INSS
         document.getElementById('form_inss').addEventListener('submit', async function(e) {
             e.preventDefault();
             const salario = parseFloat(document.getElementById('salario').value);
@@ -98,7 +97,6 @@
             document.getElementById('resultado_inss').textContent = `Desconto: ${result.desconto.toFixed(2)}, Salário Final: ${result.salario_final.toFixed(2)}`;
         });
 
-        // Função para Classificar o Triângulo
         function verificarTriangulo() {
             const a = Number(document.getElementById('ladoA').value);
             const b = Number(document.getElementById('ladoB').value);
@@ -117,8 +115,7 @@
                 document.getElementById('resultado_triangulo').innerText = "Triângulo Escaleno (todos os lados são diferentes)";
             }
         }
-
-        // Função para Calcular o Aumento de Preço
+        
         function calcularAumento() {
             const precoAtual = parseFloat(document.getElementById('preco_atual').value);
             const aumentoPercent = parseFloat(document.getElementById('aumento_percent').value);
@@ -227,7 +224,6 @@
 <p id="resultado_desconto"></p>
 
 <script>
-    // Função para calcular a média das notas e a situação
     document.getElementById('form_media').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -255,7 +251,6 @@
             `Média: ${media.toFixed(2)}<br>Situação: ${situacao}`;
     });
 
-    // Função para calcular o desconto do produto
     document.getElementById('form_desconto').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -271,13 +266,13 @@
         
         switch (produto) {
             case 'camisa':
-                desconto = 0.20; // 20% de desconto
+                desconto = 0.20; 
                 break;
             case 'bermuda':
-                desconto = 0.10; // 10% de desconto
+                desconto = 0.10; 
                 break;
             case 'calça':
-                desconto = 0.15; // 15% de desconto
+                desconto = 0.15;
                 break;
             default:
                 document.getElementById('resultado_desconto').innerHTML = "Produto não reconhecido. Insira camisa, bermuda ou calça.";
@@ -293,7 +288,6 @@
             `Preço com desconto: R$ ${precoFinal.toFixed(2).replace('.', ',')}`;
     });
 
-    // Função para ordenar os números em ordem crescente
     document.getElementById('form_ordem_crescente').addEventListener('submit', function(e) {
         e.preventDefault();
         
