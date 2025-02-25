@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Desconto de INSS, Triângulos e Aumento de Preço</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px;
+            width: 250px;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover { 
+            background-color: #45a049;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de INSS, Triângulo e Aumento</h1>
+
+    <!-- Calculadora de Desconto de INSS -->
+    <section>
+        <h2>Calcular Desconto de INSS</h2>
+        <form id="form_inss">
+            <label for="salario">Salário:</label>
+            <input type="number" id="salario" name="salario" required>
+            <button type="submit">Calcular</button>
+        </form>
+        <p id="resultado_inss"></p>
+    </section>
+
+    <!-- Classificador de Triângulo -->
+    <section>
+        <h2>Classificar Triângulo</h2>
+        <input type="number" id="ladoA" placeholder="Digite o lado A" required>
+        <input type="number" id="ladoB" placeholder="Digite o lado B" required>
+        <input type="number" id="ladoC" placeholder="Digite o lado C" required>
+        <button onclick="verificarTriangulo()">Verificar Tipo de Triângulo</button>
+        <p id="resultado_triangulo"></p>
+    </section>
+
+    <!-- Calculadora de Aumento de Preço -->
+    <section>
+        <h2>Calcular Aumento de Preço</h2>
+        <input type="number" id="preco_atual" placeholder="Preço Atual" required>
+        <input type="number" id="aumento_percent" placeholder="Porcentagem de Aumento" required>
+        <button onclick="calcularAumento()">Calcular Aumento</button>
+        <p id="resultado_aumento"></p>
+    </section>
+
+    <script>
+        // Função de INSS
+        document.getElementById('form_inss').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const salario = parseFloat(document.getElementById('salario').value);
+            const response = await fetch('/calculo_inss', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ salario })
+            });
+            const result = await response.json();
+            document.getElementById('resultado_inss').textContent = `Desconto: ${result.desconto.toFixed(2)}, Salário Final: ${result.salario_final.toFixed(2)}`;
+        });
+
+        // Função para Classificar o Triângulo
+        function verificarTriangulo() {
+            const a = Number(document.getElementById('ladoA').value);
+            const b = Number(document.getElementById('ladoB').value);
+            const c = Number(document.getElementById('ladoC').value);
+
+            if (a <= 0 || b <= 0 || c <= 0) {
+                document.getElementById('resultado_triangulo').innerText = "Os lados devem ser valores positivos!";
+                return;
+            }
+
+            if (a === b && b === c) {
+                document.getElementById('resultado_triangulo').innerText = "Triângulo Equilátero (todos os lados são iguais)";
+            } else if (a === b || b === c || a === c) {
+                document.getElementById('resultado_triangulo').innerText = "Triângulo Isósceles (dois lados são iguais)";
+            } else {
+                document.getElementById('resultado_triangulo').innerText = "Triângulo Escaleno (todos os lados são diferentes)";
+            }
+        }
+
+        // Função para Calcular o Aumento de Preço
+        function calcularAumento() {
+            const precoAtual = parseFloat(document.getElementById('preco_atual').value);
+            const aumentoPercent = parseFloat(document.getElementById('aumento_percent').value);
+
+            if (precoAtual <= 0 || aumentoPercent <= 0) {
+                document.getElementById('resultado_aumento').innerText = "Valores devem ser positivos!";
+                return;
+            }
+
+            const aumento = (precoAtual * aumentoPercent) / 100;
+            const novoPreco = precoAtual + aumento;
+            document.getElementById('resultado_aumento').innerText = `Aumento: R$ ${aumento.toFixed(2)}, Novo Preço: R$ ${novoPreco.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuste de Mercadoria, Maior Número e Ordem Crescente</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px;
+            width: 250px;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ferramentas de Ajuste</h1>
+
+    <!-- Ajuste de Preço de Mercadoria -->
+    <section>
+        <h2>Ajuste de Preço da Mercadoria</h2>
+        <form id="form_mercadoria">
+            <input type="text" id="nome" placeholder="Nome da Mercadoria" required>
+            <input type="number" id="preco" placeholder="Preço da Mercadoria" required>
+            <button type="submit">Ajustar Preço</button>
+        </form>
+        <p id="resultado_mercadoria"></p>
+    </section>
+
+    <h2>Ordenar Números em Ordem Crescente</h2>
+<form id="form_ordem_crescente">
+    <label for="numeros_ordem">Digite os números (separados por vírgulas):</label>
+    <input type="text" id="numeros_ordem" name="numeros_ordem" required>
+    <button type="submit">Ordenar</button>
+</form>
+<p id="resultado_ordem_crescente"></p>
+
+<h2>Cálculo da Média das Notas</h2>
+<form id="form_media">
+    <label for="nota1">Nota 1:</label>
+    <input type="number" id="nota1" name="nota1" required><br>
+    <label for="nota2">Nota 2:</label>
+    <input type="number" id="nota2" name="nota2" required><br>
+    <label for="nota3">Nota 3:</label>
+    <input type="number" id="nota3" name="nota3" required><br>
+    <button type="submit">Calcular Média</button>
+</form>
+<p id="resultado_media"></p>
+
+<h2>Cálculo do Desconto</h2>
+<form id="form_desconto">
+    <label for="produto">Produto (camisa, bermuda, calça):</label>
+    <input type="text" id="produto" name="produto" required>
+    <label for="preco_produto">Preço do Produto:</label>
+    <input type="number" id="preco_produto" name="preco_produto" required>
+    <button type="submit">Calcular Desconto</button>
+</form>
+<p id="resultado_desconto"></p>
+
+<script>
+    // Função para calcular a média das notas e a situação
+    document.getElementById('form_media').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let nota1 = parseFloat(document.getElementById('nota1').value);
+        let nota2 = parseFloat(document.getElementById('nota2').value);
+        let nota3 = parseFloat(document.getElementById('nota3').value);
+        
+        if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
+            document.getElementById('resultado_media').innerHTML = "Por favor, insira todas as notas corretamente.";
+            return;
+        }
+        
+        let media = (nota1 + nota2 + nota3) / 3;
+        let situacao = '';
+        
+        if (media >= 6) {
+            situacao = 'Aprovado';
+        } else if (media >= 4) {
+            situacao = 'Recuperação';
+        } else {
+            situacao = 'Reprovado';
+        }
+
+        document.getElementById('resultado_media').innerHTML = 
+            `Média: ${media.toFixed(2)}<br>Situação: ${situacao}`;
+    });
+
+    // Função para calcular o desconto do produto
+    document.getElementById('form_desconto').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let produto = document.getElementById('produto').value.toLowerCase();
+        let precoProduto = parseFloat(document.getElementById('preco_produto').value);
+
+        if (isNaN(precoProduto) || precoProduto <= 0) {
+            document.getElementById('resultado_desconto').innerHTML = "Por favor, insira um preço válido.";
+            return;
+        }
+
+        let desconto = 0;
+        
+        switch (produto) {
+            case 'camisa':
+                desconto = 0.20; // 20% de desconto
+                break;
+            case 'bermuda':
+                desconto = 0.10; // 10% de desconto
+                break;
+            case 'calça':
+                desconto = 0.15; // 15% de desconto
+                break;
+            default:
+                document.getElementById('resultado_desconto').innerHTML = "Produto não reconhecido. Insira camisa, bermuda ou calça.";
+                return;
+        }
+
+        let valorDesconto = precoProduto * desconto;
+        let precoFinal = precoProduto - valorDesconto;
+
+        document.getElementById('resultado_desconto').innerHTML = 
+            `Preço original: R$ ${precoProduto.toFixed(2).replace('.', ',')}<br>` +
+            `Desconto: R$ ${valorDesconto.toFixed(2).replace('.', ',')}<br>` +
+            `Preço com desconto: R$ ${precoFinal.toFixed(2).replace('.', ',')}`;
+    });
+
+    // Função para ordenar os números em ordem crescente
+    document.getElementById('form_ordem_crescente').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const numeros = document.getElementById('numeros_ordem').value.split(',').map(Number);
+        const numerosOrdenados = numeros.sort((a, b) => a - b);
+        
+        document.getElementById('resultado_ordem_crescente').textContent = `Números Ordenados: ${numerosOrdenados.join(', ')}`;
+    });
+</script>
